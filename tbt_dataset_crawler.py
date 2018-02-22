@@ -23,7 +23,7 @@ spanh_pattern = re.compile(spanh_word, re.I)
 spans_pattern = re.compile(spans_word, re.I)
 
 # generate info file
-info_file_path = 'E:\\Workstation\\TBTDataCrawler\\tbt_dataset.txt'
+info_file_path = 'tbt_dataset.txt'	# save in project directory
 if os.path.exists(info_file_path):
     os.remove(info_file_path)
 
@@ -43,7 +43,7 @@ def crawl_one_page_target(i, sub_url_list, num2_list):
     response = urllib.request.urlopen(
         r'http://tbt.testrust.com/notify/tbt------' + str(i) + r'.html')  
     if response.getcode() == 200:
-        print('Webpage response successfully')
+        print('Webpage response succeed')
     else:
         print('Webpage response fatal')
     web_src = response.read().decode("UTF-8", "ignore")
@@ -134,7 +134,7 @@ def crawl_one_page_target(i, sub_url_list, num2_list):
                 approval_date = ''
                 entry_date = ''
 
-            # write content into file
+            # write content into file, use excel with tab compose
             content = ("\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" 
                 % (circular_number, avisodate, agency, cover_product, 
                 cover_product_hs, cover_product_ics, purpose_reason, 
@@ -143,6 +143,7 @@ def crawl_one_page_target(i, sub_url_list, num2_list):
             info_file = open(info_file_path, 'a+', encoding="utf-8")
             info_file.write(content)
             info_file.close()
+            
             endtime = time.time()
             elapsed_time = endtime - starttime
             total_elapsedtime += elapsed_time
